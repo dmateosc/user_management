@@ -2,13 +2,22 @@ import yaml
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+import os
 
-def create_sqlite_config(config_file: str):
-    with open(config_file, "r") as f:
+# Obtener la ruta del directorio del script en ejecución
+script_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Construir la ruta al archivo de configuración YAML
+config_file_path = os.path.join(script_dir, "sqlite-database-config.yaml")
+
+
+
+def create_sqlite_config():
+    with open(config_file_path, "r") as f:
         config = yaml.safe_load(f)
 
-    db_file = config["database"]["db_file"]
-    engine_kwargs = config["database"]["engine_kwargs"]
+    db_file = config["database"]["database_file"]
+    engine_kwargs ={}
 
     # Define la URL de conexión a la base de datos SQLite
     db_url = f"sqlite:///{db_file}"
@@ -18,8 +27,5 @@ def create_sqlite_config(config_file: str):
 
     # Crea una sesión de SQLAlchemy
     SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
-    # Crea una clase base declarativa para que todos los modelos se basen en ella
-    Base = declarative_base()
-
-    return engine, SessionLocal, Base
+    
+    return engine, SessionLocal

@@ -1,13 +1,13 @@
 from abc import ABC, abstractmethod
-from domain.models.user import User
+from context.user.domain.models.user import User
 
 class UserRepository(ABC):
     @abstractmethod
-    def save(self, user: User):
+    def save(user: User ):
         pass
     @abstractmethod
-    def search(self):
+    def search():
         pass
     @abstractmethod
-    def find_user(self):
+    def find_user():
         pass

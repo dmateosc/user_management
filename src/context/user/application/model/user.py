@@ -1,7 +1,7 @@
 from datetime import datetime
 
-from infrastructure.app.rest.create_user.model.user import UserRequest, UserResponse
-from domain.models.user import Active, LastDate, Name, Phone, User
+from context.user.infrastructure.app.rest.model.user import UserRequest, UserResponse
+from context.user.domain.models.user import Active, LastDate, Name, Phone, User
 
 class UserDTO():
   def __init__(self, name: str, last_name: str, phone: int, active: bool, last_date: datetime):
@@ -37,7 +37,7 @@ class UserDTO():
       last_date=LastDate(userDTO.last_date),
       active=Active(userDTO.active)
     )
-    
+  @staticmethod
   def fromDomain(user: User):
     return UserDTO(
       name=user.name.first_name,

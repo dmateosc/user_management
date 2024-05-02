@@ -1,1 +1,3 @@
-user_repository: "user.infrastructure.persistence.sqlite.SqliteUserRepository"
+user_repository:
+  sqlite:
+    class: "context.user.infrastructure.persistence.sqlite.sqlite_user_repository.SqliteUserRepository"

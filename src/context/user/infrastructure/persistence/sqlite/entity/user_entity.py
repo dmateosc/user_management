@@ -1,6 +1,9 @@
 from sqlalchemy import Boolean, Column, DateTime, Integer, String
-from shared.infrastructure.persistence.sqlite import Base
-from domain.models.user import User
+from context.user.domain.models.user import User
+
+from sqlalchemy.ext.declarative import declarative_base
+
+Base = declarative_base()
 
 
 class UserEntity(Base):
@@ -11,8 +14,8 @@ class UserEntity(Base):
   phone = Column(Integer, index=True)
   active = Column(Boolean, index=True)
   last_date = Column(DateTime, index=True)
-  
-  def fromDomain(self, user: User):
+  @staticmethod
+  def fromDomain(user: User):
     return UserEntity(
       name=user.name.first_name,
       last_name=user.name.last_name,

@@ -1,9 +1,9 @@
 from shared.infrastructure.persistence.sqlite.sqlite_config import create_sqlite_config
 
 def get_db():
-  SessionLocal = create_sqlite_config("config.yml")
+  engine, SessionLocal = create_sqlite_config()
   db = SessionLocal()
   try:
-    yield db
+      return db
   finally:
-    db.close()
+      db.close()

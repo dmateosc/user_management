@@ -1,3 +1,4 @@
+from typing import List
 from fastapi import Depends
 from sqlalchemy.orm import Session
 from context.user.domain.repository.user_repository import UserRepository
@@ -16,4 +17,8 @@ class SqliteUserRepository(UserRepository):
     db.add(userData)
     db.commit()
     db.refresh(userData)
-    
+  
+  def find_all() -> List[UserEntity]:
+    db = get_db()
+    users = db.get()
+    return users

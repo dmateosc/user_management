@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - "./app:/app"
+    environment:
+      - FASTAPI_ENV=development
+    depends_on:
+      - mysql
+      - sqlite
+
+  mysql:
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: user_management
+      MYSQL_USER: owner
+      MYSQL_PASSWORD: owner1234
+
+  sqlite:
+    image: sqlite:latest
+    volumes:
+      - "./data:/data"

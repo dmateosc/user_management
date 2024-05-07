@@ -1,7 +1,7 @@
-version: '3.8'
+version: "3.8"
 
 services:
-  web:
+  user_management:
     build:
       context: .
       dockerfile: Dockerfile
@@ -10,12 +10,13 @@ services:
     volumes:
       - "./app:/app"
     environment:
-      - FASTAPI_ENV=development
+      - ENV=development
+      - CONFIG_FILE=config-local.yml
     depends_on:
-      - mysql
-      - sqlite
-
-  mysql:
+      - mysql_user_management
+    networks:
+      - user_management_network
+  mysql_user_management:
     image: mysql:latest
     ports:
       - "3306:3306"
@@ -24,8 +25,12 @@ services:
       MYSQL_DATABASE: user_management
       MYSQL_USER: owner
       MYSQL_PASSWORD: owner1234
-
-  sqlite:
-    image: sqlite:latest
     volumes:
-      - "./data:/data"
+      - mysql_user_management_data:/var/lib/mysql
+    networks:
+      - user_management_network
+
+networks:
+  user_management_network:
+volumes:
+  mysql_user_management_data:

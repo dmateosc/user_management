@@ -1,10 +1,10 @@
 from sqlalchemy import Boolean, Column, DateTime, Integer, String
 from context.user.domain.models.user import User
 
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import DeclarativeBase
 
-Base = declarative_base()
-
+class Base(DeclarativeBase):
+    pass
 
 class UserEntity(Base):
   __tablename__ = "users"

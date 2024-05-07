@@ -1,13 +1,11 @@
 from typing import List
-from fastapi import Depends
-from sqlalchemy.orm import Session
 from context.user.domain.repository.user_repository import UserRepository
 from context.user.domain.models.user import User
 from context.user.infrastructure.entity.user_entity import UserEntity
-from context.user.infrastructure.persistence.sqlite.sqlite_user_repository_factory import get_db
+from context.user.infrastructure.persistence.mysql.mysql_user_repository_factory import get_db
 
 
-class SqliteUserRepository(UserRepository):
+class MySQLUserRepository(UserRepository):
   def __init__(self) -> None:
     super().__init__()
   

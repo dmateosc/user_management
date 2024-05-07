@@ -1,12 +1,15 @@
-# Usa la imagen oficial de Python como base
-FROM python:3.9-slim
+FROM python:3.9
 
-# Establece el directorio de trabajo dentro del contenedor
-WORKDIR /app
+WORKDIR /code
 
-# Copia el contenido del directorio actual al contenedor en /app
-COPY . .
+COPY ./requirements.txt /code/requirements.txt
 
-# Especifica el comando para ejecutar tu aplicación FastAPI
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
+RUN pip install uvicorn
 
+COPY ./src /code/src
+
+CMD ["fastapi", "run", "src/main.py", "--port", "80"]
+
+# If running behind a proxy like Nginx or Traefik add --proxy-headers
+# CMD ["fastapi", "run", "app/main.py", "--port", "80", "--proxy-headers"]

@@ -1,0 +1,12 @@
+database:
+  active: sqlite
+  sqlite:
+    dialect: sqlite
+    database_file: src/database.db
+  mysql: 
+    dialect: mysql
+    url: localhost
+    user: owner
+    password: owner1234
+    database: user_management
+    port: 3306

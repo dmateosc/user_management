@@ -55,3 +55,9 @@ launch.json
   ]
 }
 ```
+
+## Migrations
+
+`alembic -c src/shared/infrastructure/persistence/migrations/alembic.ini revision --autogenerate`
+
+`alembic -c src/shared/infrastructure/persistence/migrations/alembic.ini upgrade head`

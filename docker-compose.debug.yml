@@ -1,0 +1,38 @@
+version: "3.4"
+
+services:
+  user_management:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        ENV: development
+        MYSQL_HOST: mysql_user_management
+        DB_ACTIVE: mysql
+        MYSQL_USER: owner
+        MYSQL_PASS: owner1234
+        MYSQL_DB: user_management
+        MYSQL_PORT: 3306
+    # command:
+    #   [
+    #     "./wait-for-it.sh",
+    #     "mysql_user_management:3306",
+    #     "--",
+    #     "your_start_command",
+    #   ]
+    ports:
+      - "8000:8000"
+      - 5678:5678
+    volumes:
+      - "./src:/code/src"
+      - "./wait-for-it.sh:/wait-for-it.sh"
+    depends_on:
+      - mysql_user_management
+    networks:
+      - user_management_network
+
+networks:
+  user_management_network:
+
+volumes:
+  mysql_user_management_data:

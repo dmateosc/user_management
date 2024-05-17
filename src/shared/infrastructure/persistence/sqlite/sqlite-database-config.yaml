@@ -1,5 +1,0 @@
-# config.yaml
-
-database:
-  dialect: sqlite
-  database_file: database.db

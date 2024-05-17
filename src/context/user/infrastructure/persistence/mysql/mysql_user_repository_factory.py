@@ -1,9 +1,9 @@
 from shared.infrastructure.persistence.mysql.mysql_config import create_mysql_config
 
 def get_db():
-  engine, SessionLocal = create_mysql_config()
+  engine, SessionLocal, db_url = create_mysql_config()
   db = SessionLocal()
   try:
-      return db
+    return db
   finally:
-      db.close()
+    db.close()

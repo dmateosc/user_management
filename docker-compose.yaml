@@ -1,36 +1,55 @@
-version: "3.8"
-
 services:
-  user_management:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "8000:8000"
-    volumes:
-      - "./app:/app"
-    environment:
-      - ENV=development
-      - CONFIG_FILE=config-local.yml
-    depends_on:
-      - mysql_user_management
-    networks:
-      - user_management_network
-  mysql_user_management:
-    image: mysql:latest
-    ports:
-      - "3306:3306"
+  db:
+    image: mysql:8.0
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: user_management
       MYSQL_USER: owner
       MYSQL_PASSWORD: owner1234
+    ports:
+      - "3306:3306"
     volumes:
       - mysql_user_management_data:/var/lib/mysql
     networks:
-      - user_management_network
+      - network
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - 8090:80
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: root
+    networks:
+      - network
+    depends_on:
+      - db
 
-networks:
-  user_management_network:
+  user_management:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        ENV: development
+        MYSQL_HOST: db
+        DB_ACTIVE: mysql
+        MYSQL_USER: root
+        MYSQL_PASS: root
+        MYSQL_DB: user_management
+        MYSQL_PORT: 3306
+    # command: ["./create_alembic.sh"]
+
+    ports:
+      - 8000:80
+    volumes:
+      - "./src:/code/src"
+      - "./create_alembic.sh:/create_alembic.sh"
+    depends_on:
+      - db
+    networks:
+      - network
+
 volumes:
   mysql_user_management_data:
+networks:
+  network:

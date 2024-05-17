@@ -1,20 +1,10 @@
 
 
-from sqlalchemy import (
-    Boolean,
-    Column,
-    Date,
-    ForeignKey,
-    Integer,
-    MetaData,
-    String,
-    Table,
-    event,
-)
-from sqlalchemy.orm import registry, relationship
 
-from context.user.infrastructure.entity.user_entity import UserEntity
-metadata = MetaData()
+
+from sqlalchemy.orm import registry
+
+from shared.infrastructure.persistence.migration.models.base import Base
+
+metadata = Base.metadata
 mapper_registry = registry(metadata=metadata)
-
-users = UserEntity

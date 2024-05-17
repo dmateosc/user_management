@@ -1,12 +1,12 @@
 database:
-  active: sqlite
+  active: ${DB_ACTIVE:sqlite}
   sqlite:
     dialect: sqlite
-    database_file: src/database.db
+    database_file: ${SQLITE_DB:src/database.db}
   mysql: 
     dialect: mysql
-    url: localhost
-    user: owner
-    password: owner1234
-    database: user_management
-    port: 3306
+    url: ${MYSQL_HOST:localhost}
+    user: ${MYSQL_USER:owner}
+    password: ${MYSQL_PASS:owner1234}
+    database: ${MYSQL_DB:user_management}
+    port: ${MYSQL_PORT:3306}

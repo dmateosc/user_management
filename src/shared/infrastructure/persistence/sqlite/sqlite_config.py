@@ -4,17 +4,18 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import os
 
+from shared.infrastructure.utils.read_yaml import load_config
+
 # Obtener la ruta del directorio del script en ejecución
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
 # Construir la ruta al archivo de configuración YAML
-config_file_path = os.path.join(script_dir, "sqlite-database-config.yaml")
+config_file_path = f"{os.getcwd()}/config/config-{os.getenv('ENV', 'development')}.yml"
 
 
 
 def create_sqlite_config():
-    with open(config_file_path, "r") as f:
-        config = yaml.safe_load(f)
+    config= load_config(config_file_path)
 
     db_file = config["database"]["database_file"]
     engine_kwargs ={}

@@ -14,5 +14,4 @@ class UserResponse(BaseModel):
   last_name: str
   phone: int
   last_date: str
-  active: bool
-   
+  active: bool 

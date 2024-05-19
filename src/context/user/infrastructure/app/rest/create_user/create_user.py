@@ -9,6 +9,6 @@ def create_user(user_repository =Depends(get_user_repository)):
   return CreateUser(user_repository)
 
 
-@router.post("/create")
+@router.post("/users")
 def user(user: UserRequest, createUser: CreateUser = Depends(create_user)):
   return createUser.save(userDTO=UserDTO.fromRequest(user)), 200

@@ -2,6 +2,7 @@ from datetime import datetime
 from pydantic import BaseModel
 
 class UserRequest(BaseModel):
+  dni: str
   name: str
   last_name: str
   phone: int
@@ -10,6 +11,7 @@ class UserRequest(BaseModel):
   
   
 class UserResponse(BaseModel):
+  dni: str
   name: str
   last_name: str
   phone: int

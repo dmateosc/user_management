@@ -2,11 +2,10 @@ from logging.config import fileConfig
 
 from alembic import context
 import os
-import yaml
 
-from shared.infrastructure.persistence.migration.models import model
-from shared.infrastructure.persistence.mysql.mysql_config import create_mysql_config
-from shared.infrastructure.utils.read_yaml import load_config
+from context.shared.infrastructure.persistence.migration.models import model
+from context.shared.infrastructure.persistence.mysql.mysql_config import create_mysql_config
+from context.shared.infrastructure.utils.read_yaml import load_config
 
 
 
@@ -39,11 +38,14 @@ def run_migrations_online():
     connectable = engine
 
     with connectable.connect() as connection:
-        print(f"esto es una conexión {engine}")
+        print(f"esto es una conexión {target_metadata.tables}")
         context.configure(connection=connection, target_metadata=target_metadata)
 
         with context.begin_transaction():
+            print("iniciamos la migración")
             context.run_migrations()
+            print("ha ido ok")
+
             
 if context.is_offline_mode():
     run_migrations_offline()

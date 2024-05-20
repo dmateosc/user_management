@@ -1,10 +1,11 @@
-from fastapi import FastAPI
+from fastapi import APIRouter
 
-from app.rest.create_user.create_user import create_user
-from app.rest.find_user.find_user import find_user
+from context.user.infrastructure.app.rest.create_user.create_user import router as create_user 
+from context.user.infrastructure.app.rest.find_user.find_user import router as  find_user
 
-app = FastAPI()
+router = APIRouter()
 
 
-app.include_router(create_user.router, prefix="/user", tags=["user"])
-app.include_router(find_user.router, prefix="/user", tags=["user"])
+
+router.include_router(create_user, tags=["user"])
+router.include_router(find_user, tags=["user"])

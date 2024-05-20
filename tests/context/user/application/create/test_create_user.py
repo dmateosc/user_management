@@ -17,6 +17,7 @@ def create_user(user_repository):
 def test_save_user(create_user, user_repository):
     # Arrange
     userDTO = UserDTO(
+        dni="28922211P",
         name="John",
         last_name="Doe",
         phone=123456789,

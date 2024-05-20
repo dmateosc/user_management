@@ -9,6 +9,13 @@ class Name:
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 
+class DNI:
+    def __init__(self, dni: str):
+        self.dni = dni
+
+    def __str__(self):
+        return f"{self.dni}"
+
 class Phone:
     def __init__(self, number: int):
         if not self.validate(number):
@@ -39,11 +46,12 @@ class Active:
         return "Active" if self.active else "Inactive"
       
 class User():
-  def __init__(self, name: Name, phone: Phone, active: Active, last_date: LastDate):
+  def __init__(self,dni: DNI, name: Name, phone: Phone, active: Active, last_date: LastDate):
+    self.dni = dni
     self.name = name
     self.phone = phone
     self.active = active
     self.last_date = last_date
   def __str__(self):
-    return f"Name: {self.name}, Phone: {self.phone}, Active: {self.active}, Last Date: {self.last_date}"
+    return f"Name: {self.name}, Phone: {self.phone}, Active: {self.active}, Last Date: {self.last_date}, DNI: {self.dni}"
 

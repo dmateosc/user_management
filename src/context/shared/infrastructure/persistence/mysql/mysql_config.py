@@ -1,9 +1,8 @@
-import yaml
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 import os
 
-from shared.infrastructure.utils.read_yaml import load_config
+from context.shared.infrastructure.utils.read_yaml import load_config
 
 # Obtener la ruta del directorio del script en ejecución
 

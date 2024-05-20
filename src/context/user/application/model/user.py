@@ -1,10 +1,11 @@
 from datetime import datetime
 
 from context.user.infrastructure.app.rest.model.user import UserRequest, UserResponse
-from context.user.domain.models.user import Active, LastDate, Name, Phone, User
+from context.user.domain.models.user import *
 
 class UserDTO():
-  def __init__(self, name: str, last_name: str, phone: int, active: bool, last_date: datetime):
+  def __init__(self,dni: str, name: str, last_name: str, phone: int, active: bool, last_date: datetime):
+    self.dni = dni
     self.name = name
     self.last_name = last_name
     self.phone = phone
@@ -14,6 +15,7 @@ class UserDTO():
   @staticmethod
   def fromRequest(userRequest: UserRequest):
     return UserDTO(
+      dni=userRequest.dni,
       name=userRequest.name,
       last_name=userRequest.last_name,
       phone=userRequest.phone,
@@ -21,25 +23,28 @@ class UserDTO():
       active=userRequest.active
     )
   @staticmethod 
-  def toResponse(userDTO: 'UserDTO'):
+  def toResponse(user: 'UserDTO'):
     return UserResponse(
-      name=userDTO.name,
-      last_name=userDTO.last_name,
-      phone=userDTO.phone,
-      last_date=userDTO.last_date,
-      active=userDTO.active
+      dni= user.dni,
+      name=user.name,
+      last_name=user.last_name,
+      phone=user.phone,
+      last_date=user.last_date.strftime('%Y-%m-%d'),
+      active=user.active
     )
   @staticmethod
-  def toDomain(userDTO: 'UserDTO'):
+  def toDomain(self):
     return User(
-      name=Name(userDTO.name,userDTO.last_name),
-      phone=Phone(userDTO.phone),
-      last_date=LastDate(userDTO.last_date),
-      active=Active(userDTO.active)
+      dni=DNI(self.dni),
+      name=Name(self.name,self.last_name),
+      phone=Phone(self.phone),
+      last_date=LastDate(self.last_date),
+      active=Active(self.active)
     )
   @staticmethod
   def fromDomain(user: User):
     return UserDTO(
+      dni=user.dni.dni,
       name=user.name.first_name,
       phone=user.phone.number,
       last_date=user.last_date.last_date,

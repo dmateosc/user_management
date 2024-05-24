@@ -1,6 +1,6 @@
 from typing import List
 from context.user.domain.repository.user_repository import UserRepository
-from context.user.domain.models.user import User
+from context.user.domain.models.user import *
 from context.user.infrastructure.persistence.entity.user_entity import UserEntity
 from context.user.infrastructure.persistence.mysql.mysql_user_repository_factory import get_db
 
@@ -22,8 +22,8 @@ class MySQLUserRepository(UserRepository):
     print(f"esto es un user: {users}")
     return [user.toDomain() for user in users]
   
-  def find_user(dni: str) -> User:
+  def find_user(dni: DNI) -> User:
     db = get_db()
-    user = db.query(UserEntity).filter(UserEntity.dni == dni).first()
+    user = db.query(UserEntity).filter(UserEntity.dni == dni.dni).first()
     print(f"esto es un user: {user}")
     return UserEntity.toDomain(user)
